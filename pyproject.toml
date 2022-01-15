@@ -1,0 +1,82 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "hatch-vcs"
+description = 'Hatch plugin for versioning with your preferred VCS'
+readme = "README.md"
+license = "MIT"
+keywords = [
+  "git",
+  "hatch",
+  "mercurial",
+  "plugin",
+  "scm",
+  "vcs",
+  "version",
+]
+authors = [
+  { name = "Ofek Lev", email = "oss@ofek.dev" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 2.7",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = [
+  "hatchling>=0.9",
+  "setuptools-scm>=6.4.0; python_version > '3'",
+  "setuptools-scm<6; python_version < '3'",
+]
+dynamic = ["version"]
+
+[project.urls]
+Funding = "https://github.com/sponsors/ofek"
+History = "https://github.com/ofek/hatch-vcs/blob/master/HISTORY.md"
+Issues = "https://github.com/ofek/hatch-vcs/issues"
+Source = "https://github.com/ofek/hatch-vcs"
+
+[project.entry-points.hatch]
+vcs = "hatch_vcs.hooks"
+
+[tool.hatch.version]
+path = "hatch_vcs/__about__.py"
+
+[tool.hatch.build.targets.sdist]
+[tool.hatch.build.targets.wheel]
+
+[tool.black]
+include = '\.pyi?$'
+line-length = 120
+skip-string-normalization = true
+target-version = ["py37"]
+
+[tool.isort]
+default_section = "THIRDPARTY"
+force_grid_wrap = 0
+include_trailing_comma = true
+known_first_party = ["hatch_vcs"]
+line_length = 120
+multi_line_output = 3
+use_parentheses = true
+
+[tool.coverage.run]
+branch = true
+parallel = true
+omit = [
+  "hatch_vcs/__about__.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
