@@ -37,12 +37,14 @@ The [version source plugin](https://ofek.dev/hatch/latest/plugins/version-source
 
     ```toml
     [tool.hatch.version]
+    source = "vcs"
     ```
 
 - ***hatch.toml***
 
     ```toml
     [version]
+    source = "vcs"
     ```
 
 ### Version source options
