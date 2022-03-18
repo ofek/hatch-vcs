@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling>=0.21.0"]
 build-backend = "hatchling.build"
 
 [project]
@@ -31,7 +31,7 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dependencies = [
-  "hatchling>=0.9",
+  "hatchling>=0.21.0",
   "setuptools-scm>=6.4.0; python_version > '3'",
   "setuptools-scm<6; python_version < '3'",
 ]

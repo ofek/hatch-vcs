@@ -56,7 +56,10 @@ class VCSVersionSource(VersionSourceInterface):
         config['root'] = self.root
 
         config.setdefault('tag_regex', self.config_tag_pattern)
-        config.setdefault('fallback_version', self.config_fallback_version)
+
+        # Only set for non-empty strings
+        if self.config_fallback_version:
+            config['fallback_version'] = self.config_fallback_version
 
         # Writing only occurs when the build hook is enabled
         config.pop('write_to', None)

@@ -8,6 +8,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
+***Added:***
+
+- Bump the minimum supported version of Hatchling
+
+***Fixed:***
+
+- Fix handling of `fallback_version` default value
+
 ## 0.1.0 - 2022-01-18
 
 This is the initial public release.
