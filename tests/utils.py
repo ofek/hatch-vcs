@@ -21,16 +21,21 @@ def write_file(path, contents):
         f.write(contents)
 
 
-def build_project(*args):
-    _run_command(sys.executable, '-m', 'hatchling', 'build', *args)
+def build_project(*args, **kwargs):
+    if 'env' not in kwargs:
+        env = os.environ.copy()
+        env.pop('SETUPTOOLS_SCM_PRETEND_VERSION', None)
+    else:
+        env = kwargs['env']
+    _run_command(sys.executable, '-m', 'hatchling', 'build', *args, env=env)
 
 
 def git(*args):
     _run_command('git', *args)
 
 
-def _run_command(*command):
-    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+def _run_command(*command, **kwargs):
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, **kwargs)
     stdout, _ = process.communicate()
 
     if process.returncode:  # no cov
