@@ -55,6 +55,10 @@ The [version source plugin](https://ofek.dev/hatch/latest/plugins/version-source
 | `fallback-version` | `str` | | The version that will be used if no other method for detecting the version is successful. If not specified, unsuccessful version detection will raise an error. |
 | `raw-options` | `dict` | | A table of [`setuptools-scm` parameters](https://github.com/pypa/setuptools_scm#configuration-parameters) that will override any of the options listed above. The `write_to` and `write_to_template` parameters are ignored. |
 
+### Version source environment variables
+
+- `SETUPTOOLS_SCM_PRETEND_VERSION`: When defined and not empty, its used as the primary source for the version number in which case it will be a unparsed string.
+
 ## Build hook
 
 The [build hook plugin](https://ofek.dev/hatch/latest/plugins/build-hook/) name is `vcs`.
