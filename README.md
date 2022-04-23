@@ -57,7 +57,7 @@ The [version source plugin](https://ofek.dev/hatch/latest/plugins/version-source
 
 ### Version source environment variables
 
-- `SETUPTOOLS_SCM_PRETEND_VERSION`: When defined and not empty, its used as the primary source for the version number in which case it will be a unparsed string.
+- `SETUPTOOLS_SCM_PRETEND_VERSION`: When defined and not empty, it's used as the primary source for the version, in which case it will be an unparsed string.
 
 ## Build hook
 
