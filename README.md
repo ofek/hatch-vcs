@@ -8,13 +8,14 @@
 
 -----
 
-This provides a plugin for [Hatch](https://github.com/ofek/hatch) that uses your preferred version control system (like Git) to determine project versions.
+This provides a plugin for [Hatch](https://github.com/pypa/hatch) that uses your preferred version control system (like Git) to determine project versions.
 
 **Table of Contents**
 
 - [Global dependency](#global-dependency)
 - [Version source](#version-source)
   - [Version source options](#version-source-options)
+  - [Version source environment variables](#version-source-environment-variables)
 - [Build hook](#build-hook)
   - [Build hook options](#build-hook-options)
 - [License](#license)
@@ -31,7 +32,7 @@ build-backend = "hatchling.build"
 
 ## Version source
 
-The [version source plugin](https://ofek.dev/hatch/latest/plugins/version-source/) name is `vcs`.
+The [version source plugin](https://hatch.pypa.io/latest/plugins/version-source/) name is `vcs`.
 
 - ***pyproject.toml***
 
@@ -61,7 +62,7 @@ The [version source plugin](https://ofek.dev/hatch/latest/plugins/version-source
 
 ## Build hook
 
-The [build hook plugin](https://ofek.dev/hatch/latest/plugins/build-hook/) name is `vcs`.
+The [build hook plugin](https://hatch.pypa.io/latest/plugins/build-hook/) name is `vcs`.
 
 - ***pyproject.toml***
 
