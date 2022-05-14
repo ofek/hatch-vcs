@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "hatch-vcs"
 description = 'Hatch plugin for versioning with your preferred VCS'
 readme = "README.md"
-license = "MIT"
+license = { text = "MIT" }
 keywords = [
   "git",
   "hatch",
