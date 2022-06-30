@@ -6,11 +6,8 @@ import sys
 import zipfile
 
 import pytest
-from importlib_metadata import version
 
 from .utils import build_project, read_file
-
-setuptools_scm_major = int(version("setuptools_scm").split(".")[0])
 
 
 def test_basic(new_project_basic):
@@ -78,10 +75,7 @@ def test_write(new_project_write):
     assert os.path.isfile(version_file)
 
     lines = read_file(version_file).splitlines()
-    if setuptools_scm_major < 7:
-        assert lines[3] == "version = '1.2.3'"
-    else:
-        assert lines[3] == "__version__ = version = '1.2.3'"
+    assert lines[3] == "version = '1.2.3'"
 
 
 @pytest.mark.skipif(sys.version_info[0] == 2, reason='Depends on fix in 6.4.0 which is Python 3-only')
