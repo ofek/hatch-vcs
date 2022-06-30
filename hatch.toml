@@ -1,5 +1,6 @@
 [envs.default]
 dependencies = [
+  "importlib-metadata",
   "pytest",
   "pytest-cov",
 ]
