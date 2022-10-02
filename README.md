@@ -97,6 +97,10 @@ Building or installing when the latest tag is ``v1.2.3`` will generate the file
 | `version-file` | `str` | ***REQUIRED*** | The relative path to the file that gets updated with the current version. |
 | `template` | `str` | | The template used to overwrite the `version-file`. See the [code](https://github.com/pypa/setuptools_scm/blob/v6.4.0/src/setuptools_scm/__init__.py#L30-L39) for the default template for each file extension. |
 
+### Editable installs
+
+The version file is only updated upon install or build. Thus the version number in an [editable install](https://pip.pypa.io/en/stable/topics/local-project-installs/#editable-installs) (Hatch's [dev mode](https://hatch.pypa.io/latest/config/build/#dev-mode)) will be incorrect if the version changes and the project is not rebuilt. An unsupported workaround for keeping the version number up-to-date can be found at [hatch-vcs-footgun-example](https://github.com/maresb/hatch-vcs-footgun-example).
+
 ## License
 
 `hatch-vcs` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
