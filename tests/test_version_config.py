@@ -50,6 +50,11 @@ class TestRawOptions:
         with pytest.raises(TypeError, match='option `raw-options` must be a table'):
             _ = version_source.config_raw_options
 
+    def test_root(self, new_project_basic):
+        config = {'raw-options': {'root': '..'}}
+        version_source = VCSVersionSource(new_project_basic, config)
+        assert version_source.setuptools_scm_config["root"] == ".."
+
 
 def test_coverage(new_project_basic):
     version_source = VCSVersionSource(new_project_basic, {})
