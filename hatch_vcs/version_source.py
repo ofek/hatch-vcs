@@ -52,7 +52,7 @@ class VCSVersionSource(VersionSourceInterface):
         from copy import deepcopy
 
         config = deepcopy(self.config_raw_options)
-        config['root'] = config.get('root', self.root)
+        config.setdefault('root', self.root)
 
         config.setdefault('tag_regex', self.config_tag_pattern)
 
