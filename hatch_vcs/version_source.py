@@ -68,6 +68,5 @@ class VCSVersionSource(VersionSourceInterface):
     def get_version_data(self):
         from setuptools_scm import get_version
 
-        config = self.setuptools_scm_config()
-        version = get_version(**config)
+        version = get_version(**self.setuptools_scm_config)
         return {'version': version}
