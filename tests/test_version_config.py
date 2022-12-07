@@ -53,7 +53,7 @@ class TestRawOptions:
     def test_root(self, new_project_basic):
         config = {'raw-options': {'root': '..'}}
         version_source = VCSVersionSource(new_project_basic, config)
-        assert version_source.setuptools_scm_config["root"] == ".."
+        assert version_source.setuptools_scm_config['root'] == '..'
 
 
 def test_coverage(new_project_basic):
