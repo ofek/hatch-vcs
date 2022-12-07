@@ -112,7 +112,6 @@ def test_fallback(new_project_fallback):
 
 
 def test_root(new_project_root_elsewhere):
-    # raise Exception(os.listdir())
     build_project('-t', 'wheel')
 
     build_dir = os.path.join(new_project_root_elsewhere, 'dist')
