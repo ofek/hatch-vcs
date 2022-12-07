@@ -47,8 +47,7 @@ class VCSVersionSource(VersionSourceInterface):
 
         return self.__config_raw_options
 
-    @property
-    def setuptools_scm_config(self):
+    def construct_setuptools_scm_config(self):
         from copy import deepcopy
 
         config = deepcopy(self.config_raw_options)
@@ -68,5 +67,5 @@ class VCSVersionSource(VersionSourceInterface):
     def get_version_data(self):
         from setuptools_scm import get_version
 
-        version = get_version(**self.setuptools_scm_config)
+        version = get_version(**self.construct_setuptools_scm_config())
         return {'version': version}
