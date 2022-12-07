@@ -46,6 +46,7 @@ class VCSVersionSource(VersionSourceInterface):
             self.__config_raw_options = raw_options
 
         return self.__config_raw_options
+
     @property
     def setuptools_scm_config(self):
         from copy import deepcopy
