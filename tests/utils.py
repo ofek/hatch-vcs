@@ -12,7 +12,7 @@ def create_file(path):
 
 
 def read_file(path):
-    with open(path, 'r') as f:
+    with open(path) as f:
         return f.read()
 
 
