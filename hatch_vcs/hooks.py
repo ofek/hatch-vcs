@@ -3,8 +3,8 @@
 # SPDX-License-Identifier: MIT
 from hatchling.plugin import hookimpl
 
-from .build_hook import VCSBuildHook
-from .version_source import VCSVersionSource
+from hatch_vcs.build_hook import VCSBuildHook
+from hatch_vcs.version_source import VCSVersionSource
 
 
 @hookimpl
