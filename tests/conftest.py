@@ -33,7 +33,7 @@ def temp_dir():
 
 
 @contextmanager
-def create_project(directory, metadata, setup_vcs=True):
+def create_project(directory, metadata, setup_vcs=True):  # noqa: FBT002
     project_dir = os.path.join(directory, 'my-app')
     os.mkdir(project_dir)
 
