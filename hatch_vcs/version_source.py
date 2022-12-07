@@ -47,13 +47,11 @@ class VCSVersionSource(VersionSourceInterface):
 
         return self.__config_raw_options
 
-    def get_version_data(self):
+    def construct_setuptools_scm_config(self):
         from copy import deepcopy
 
-        from setuptools_scm import get_version
-
         config = deepcopy(self.config_raw_options)
-        config['root'] = self.root
+        config.setdefault('root', self.root)
 
         config.setdefault('tag_regex', self.config_tag_pattern)
 
@@ -64,6 +62,10 @@ class VCSVersionSource(VersionSourceInterface):
         # Writing only occurs when the build hook is enabled
         config.pop('write_to', None)
         config.pop('write_to_template', None)
+        return config
 
-        version = get_version(**config)
+    def get_version_data(self):
+        from setuptools_scm import get_version
+
+        version = get_version(**self.construct_setuptools_scm_config())
         return {'version': version}
