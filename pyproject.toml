@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling>=0.21.0"]
+requires = ["hatchling>=1.1.0"]
 build-backend = "hatchling.build"
 
 [project]
@@ -8,6 +8,7 @@ dynamic = ["version"]
 description = 'Hatch plugin for versioning with your preferred VCS'
 readme = "README.md"
 license = { text = "MIT" }
+requires-python = ">= 3.7"
 keywords = [
   "git",
   "hatch",
@@ -23,7 +24,6 @@ authors = [
 classifiers = [
   "Development Status :: 4 - Beta",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 2.7",
   "Programming Language :: Python :: 3.7",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
@@ -33,9 +33,8 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dependencies = [
-  "hatchling>=0.21.0",
-  "setuptools-scm>=6.4.0; python_version > '3'",
-  "setuptools-scm<6; python_version < '3'",
+  "hatchling>=1.1.0",
+  "setuptools-scm>=6.4.0",
 ]
 
 [project.urls]

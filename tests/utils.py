@@ -31,12 +31,15 @@ def build_project(*args, **kwargs):
 
 
 def git(*args):
-    _run_command('git', *args)
+    return _run_command('git', *args)
 
 
 def _run_command(*command, **kwargs):
     process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, **kwargs)
     stdout, _ = process.communicate()
+    stdout = stdout.decode('utf-8')
 
     if process.returncode:  # no cov
-        raise Exception(stdout.decode('utf-8'))
+        raise Exception(stdout)
+
+    return stdout

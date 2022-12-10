@@ -33,7 +33,7 @@ def temp_dir():
 
 
 @contextmanager
-def create_project(directory, metadata, setup_vcs=True, nested=False):  # noqa: FBT002
+def create_project(directory, metadata, *, setup_vcs=True, nested=False):
     root_dir = project_dir = os.path.join(directory, 'my-app')
     os.mkdir(root_dir)
 
@@ -160,5 +160,29 @@ source = "vcs"
 raw-options = { root = ".." }
 """,
         nested=True,
+    ) as project:
+        yield project
+
+
+@pytest.fixture
+def new_project_metadata(temp_dir):
+    with create_project(
+        temp_dir,
+        """\
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "my-app"
+dynamic = ["version", "urls"]
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.metadata.hooks.vcs.urls]
+Homepage = "https://www.google.com"
+foo = "https://github.com/bar/baz#{commit_hash}"
+""",
     ) as project:
         yield project
