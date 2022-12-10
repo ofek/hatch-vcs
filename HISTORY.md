@@ -8,6 +8,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
+***Changed:***
+
+- Drop support for Python 2
+
+***Added:***
+
+- Add a metadata hook for injecting VCS metadata
+- Bump the minimum supported version of Hatchling
+
 ## 0.2.1 - 2022-12-06
 
 ***Fixed:***

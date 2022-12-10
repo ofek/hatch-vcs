@@ -19,6 +19,10 @@ This provides a plugin for [Hatch](https://github.com/pypa/hatch) that uses your
 - [Build hook](#build-hook)
   - [Build hook options](#build-hook-options)
   - [Editable installs](#editable-installs)
+- [Metadata hook](#metadata-hook)
+  - [Metadata hook options](#metadata-hook-options)
+    - [URLs](#urls)
+  - [Example](#example)
 - [License](#license)
 
 ## Global dependency
@@ -33,7 +37,7 @@ build-backend = "hatchling.build"
 
 ## Version source
 
-The [version source plugin](https://hatch.pypa.io/latest/plugins/version-source/) name is `vcs`.
+The [version source plugin](https://hatch.pypa.io/latest/plugins/version-source/reference/) name is `vcs`.
 
 - ***pyproject.toml***
 
@@ -63,7 +67,7 @@ The [version source plugin](https://hatch.pypa.io/latest/plugins/version-source/
 
 ## Build hook
 
-The [build hook plugin](https://hatch.pypa.io/latest/plugins/build-hook/) name is `vcs`.
+The [build hook plugin](https://hatch.pypa.io/latest/plugins/build-hook/reference/) name is `vcs`.
 
 - ***pyproject.toml***
 
@@ -101,6 +105,50 @@ Building or installing when the latest tag is ``v1.2.3`` will generate the file
 ### Editable installs
 
 The version file is only updated upon install or build. Thus the version number in an [editable install](https://pip.pypa.io/en/stable/topics/local-project-installs/#editable-installs) (Hatch's [dev mode](https://hatch.pypa.io/latest/config/build/#dev-mode)) will be incorrect if the version changes and the project is not rebuilt. An unsupported workaround for keeping the version number up-to-date can be found at [hatch-vcs-footgun-example](https://github.com/maresb/hatch-vcs-footgun-example).
+
+## Metadata hook
+
+**Note:** only Git is supported
+
+The [metadata hook plugin](https://hatch.pypa.io/latest/plugins/metadata-hook/reference/) name is `vcs`.
+
+- ***pyproject.toml***
+
+    ```toml
+    [tool.hatch.metadata.hooks.vcs]
+    ```
+
+- ***hatch.toml***
+
+    ```toml
+    [metadata.hooks.vcs]
+    ```
+
+### Metadata hook options
+
+#### URLs
+
+The `urls` option is equivalent to [`project.urls`](https://hatch.pypa.io/latest/config/metadata/#urls) except that each URL supports [context formatting](https://hatch.pypa.io/latest/config/context/) with the following fields:
+
+- `commit_hash` - the latest commit hash
+
+### Example
+
+- ***pyproject.toml***
+
+    ```toml
+    [tool.hatch.metadata.hooks.vcs]
+    Homepage = "https://www.example.com"
+    source_archive = "https://github.com/org/repo/archive/{commit_hash}.zip"
+    ```
+
+- ***hatch.toml***
+
+    ```toml
+    [metadata.hooks.vcs]
+    Homepage = "https://www.example.com"
+    source_archive = "https://github.com/org/repo/archive/{commit_hash}.zip"
+    ```
 
 ## License
 

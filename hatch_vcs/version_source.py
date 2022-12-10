@@ -8,7 +8,7 @@ class VCSVersionSource(VersionSourceInterface):
     PLUGIN_NAME = 'vcs'
 
     def __init__(self, *args, **kwargs):
-        super(VCSVersionSource, self).__init__(*args, **kwargs)  # noqa: UP008
+        super().__init__(*args, **kwargs)
 
         self.__config_tag_pattern = None
         self.__config_fallback_version = None

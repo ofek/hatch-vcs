@@ -43,13 +43,3 @@ jobs:
 
     - name: Run tests
       run: hatch run cov
-
-    - if: matrix.python-version == '3.9'
-      name: Set up Python 2.7
-      uses: actions/setup-python@v4
-      with:
-        python-version: '2.7'
-
-    - if: matrix.python-version == '3.9'
-      name: Run tests on Python 2.7
-      run: hatch run all.py2.7:test

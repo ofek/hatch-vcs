@@ -4,6 +4,7 @@
 from hatchling.plugin import hookimpl
 
 from hatch_vcs.build_hook import VCSBuildHook
+from hatch_vcs.metadata_hook import VCSMetadataHook
 from hatch_vcs.version_source import VCSVersionSource
 
 
@@ -15,3 +16,8 @@ def hatch_register_version_source():
 @hookimpl
 def hatch_register_build_hook():
     return VCSBuildHook
+
+
+@hookimpl
+def hatch_register_metadata_hook():
+    return VCSMetadataHook
