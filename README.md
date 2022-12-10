@@ -132,6 +132,17 @@ The `urls` option is equivalent to [`project.urls`](https://hatch.pypa.io/latest
 
 - `commit_hash` - the latest commit hash
 
+Be sure to add `urls` to [`project.dynamic`](https://hatch.pypa.io/latest/config/metadata/#dynamic):
+
+- ***pyproject.toml***
+
+    ```toml
+    [project]
+    dynamic = [
+      "urls",
+    ]
+    ```
+
 ### Example
 
 - ***pyproject.toml***
