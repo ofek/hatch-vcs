@@ -75,8 +75,10 @@ def test_write(new_project_write):
     assert os.path.isfile(version_file)
 
     lines = read_file(version_file).splitlines()
-    assert lines[3].startswith(('version =', '__version__ ='))
-    assert lines[3].endswith("version = '1.2.3'")
+    version_starts = ('version = ', '__version__ = ')
+    assert any(line.startswith(version_starts) for line in lines)
+    version_line = next(line for line in lines if line.startswith(version_starts))
+    assert version_line.endswith(" = '1.2.3'")
 
 
 @pytest.mark.skipif(sys.version_info[0] == 2, reason='Depends on fix in 6.4.0 which is Python 3-only')
