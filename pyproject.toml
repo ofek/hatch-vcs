@@ -100,7 +100,7 @@ ban-relative-imports = "all"
 
 [tool.ruff.per-file-ignores]
 # Tests can use relative imports and assertions
-"tests/**/*" = ["I252", "S101"]
+"tests/**/*" = ["TID252", "S101"]
 
 [tool.mypy]
 disallow_untyped_defs = false

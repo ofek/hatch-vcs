@@ -16,7 +16,7 @@ from .utils import create_file, git, write_file
 def handle_remove_readonly(func, path, exc):  # no cov
     # PermissionError: [WinError 5] Access is denied: '...\\.git\\...'
     if func in (os.rmdir, os.remove, os.unlink) and exc[1].errno == errno.EACCES:
-        os.chmod(path, stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)
+        os.chmod(path, stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)  # noqa: S103
         func(path)
     else:
         raise
