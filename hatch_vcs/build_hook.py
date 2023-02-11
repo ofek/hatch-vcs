@@ -18,9 +18,9 @@ class VCSBuildHook(BuildHookInterface):
         if self.__config_version_file is None:
             version_file = self.config.get('version-file', '')
             if not isinstance(version_file, str):
-                raise TypeError('Option `version-file` for build hook `{}` must be a string'.format(self.PLUGIN_NAME))
+                raise TypeError(f'Option `version-file` for build hook `{self.PLUGIN_NAME}` must be a string')
             elif not version_file:
-                raise ValueError('Option `version-file` for build hook `{}` is required'.format(self.PLUGIN_NAME))
+                raise ValueError(f'Option `version-file` for build hook `{self.PLUGIN_NAME}` is required')
 
             self.__config_version_file = version_file
 
@@ -31,7 +31,7 @@ class VCSBuildHook(BuildHookInterface):
         if self.__config_template is None:
             template = self.config.get('template', '')
             if not isinstance(template, str):
-                raise TypeError('Option `template` for build hook `{}` must be a string'.format(self.PLUGIN_NAME))
+                raise TypeError(f'Option `template` for build hook `{self.PLUGIN_NAME}` must be a string')
 
             self.__config_template = template
 
@@ -42,4 +42,4 @@ class VCSBuildHook(BuildHookInterface):
 
         dump_version(self.root, self.metadata.version, self.config_version_file, template=self.config_template)
 
-        build_data['artifacts'].append('/{}'.format(self.config_version_file))
+        build_data['artifacts'].append(f'/{self.config_version_file}')
