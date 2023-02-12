@@ -148,7 +148,7 @@ Be sure to add `urls` to [`project.dynamic`](https://hatch.pypa.io/latest/config
 - ***pyproject.toml***
 
     ```toml
-    [tool.hatch.metadata.hooks.vcs]
+    [tool.hatch.metadata.hooks.vcs.urls]
     Homepage = "https://www.example.com"
     source_archive = "https://github.com/org/repo/archive/{commit_hash}.zip"
     ```
@@ -156,7 +156,7 @@ Be sure to add `urls` to [`project.dynamic`](https://hatch.pypa.io/latest/config
 - ***hatch.toml***
 
     ```toml
-    [metadata.hooks.vcs]
+    [metadata.hooks.vcs.urls]
     Homepage = "https://www.example.com"
     source_archive = "https://github.com/org/repo/archive/{commit_hash}.zip"
     ```
