@@ -1,9 +1,35 @@
 # SPDX-FileCopyrightText: 2022-present Ofek Lev <oss@ofek.dev>
 #
 # SPDX-License-Identifier: MIT
+import logging
+import os
+from contextlib import contextmanager
 from functools import cached_property
 
+try:
+    from importlib.metadata import entry_points
+except ImportError:
+    from importlib_metadata import entry_points  # type: ignore
+
+import pathspec
 from hatchling.builders.hooks.plugin.interface import BuildHookInterface
+
+
+class SuppressMessage(logging.Handler):
+    def __init__(self, level=logging.NOTSET, *, ignore_message: str):
+        self.ignore_message = ignore_message
+        super().__init__(level=level)
+
+    def filter(self, record: logging.LogRecord) -> bool:  # noqa: A003
+        if record.msg == self.ignore_message:
+            return False
+        return True
+
+    @contextmanager
+    def inject(self, logger: logging.Logger):
+        logger.addHandler(self)
+        yield
+        logger.removeHandler(self)
 
 
 class VCSBuildHook(BuildHookInterface):
@@ -28,6 +54,26 @@ class VCSBuildHook(BuildHookInterface):
 
     def initialize(self, version, build_data):
         from setuptools_scm import dump_version
+
+        if self.config.get('detect-files'):
+            file_finders = entry_points().select(group='setuptools.file_finders', name='setuptools_scm')
+            file_finder = next(iter(file_finders)).load()
+
+            # setuptools_scm doesn't provide an easy way to predict noise
+            suppressor = SuppressMessage(ignore_message="listing git files failed - pretending there aren't any")
+
+            # If working from a repository, retrieve files; empty if building from archive or sdist
+            with suppressor.inject(logging.getLogger('setuptools_scm')):
+                vcs_files = {os.path.relpath(f, self.root) for f in file_finder(self.root)}
+
+            if vcs_files:
+                # Artifacts are included after exclusions are applied, so add VCS-identified files
+                # to artifacts
+                included = vcs_files - set(self.build_config.exclude_spec.match_files(vcs_files))
+                build_data['artifacts'].extend(f'/{f}' for f in sorted(included))
+
+                # Exclude everything else, unless overridden as an artifact or force-include
+                self.build_config.exclude_spec.patterns[:] = [pathspec.GitIgnorePattern('*')]
 
         kwargs = {}
         if self.config_template:
