@@ -110,7 +110,7 @@ The version file is only updated upon install or build. Thus the version number 
 
 **Note:** only Git is supported
 
-The [metadata hook plugin](https://hatch.pypa.io/latest/plugins/metadata-hook/reference/) is for inserting the generated version into metadata fields other than `version`. Its name is `vcs`.
+The [metadata hook plugin](https://hatch.pypa.io/latest/plugins/metadata-hook/reference/) is for inserting VCS data (currently the commit hash) into metadata fields other than `version`. Its name is `vcs`.
 
 - ***pyproject.toml***
 
