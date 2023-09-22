@@ -9,7 +9,7 @@ import tempfile
 from contextlib import contextmanager
 from sys import version_info
 
-if version_info >= (3, 12):
+if version_info[:2] >= (3, 12):
     from shutil import rmtree
 else:
     from shutil import rmtree as _rmtree
