@@ -23,7 +23,9 @@ else:
 
             def onerror(func, path, exc):
                 return onexc(func, path, exc[1])
+
         return _rmtree(path, ignore_errors, onerror, *args, **kwds)
+
 
 import pytest
 
