@@ -17,9 +17,9 @@ else:
     # Backport the onexc keyword argument from Python 3.12
     @wraps(_rmtree)
     def rmtree(path, ignore_errors=False, onerror=None, *args, **kwds):
-        if "onexc" in kwds:
+        if 'onexc' in kwds:
             kwds = dict(kwds)
-            onexc = kwds.pop("onexc")
+            onexc = kwds.pop('onexc')
 
             def onerror(func, path, exc):
                 return onexc(func, path, exc[1])
