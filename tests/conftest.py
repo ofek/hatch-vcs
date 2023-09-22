@@ -7,6 +7,7 @@ import shutil
 import stat
 import tempfile
 from contextlib import contextmanager
+from sys import version_info
 
 import pytest
 
@@ -15,7 +16,7 @@ from .utils import create_file, git, write_file
 
 def handle_remove_readonly(func, path, exc):  # no cov
     # PermissionError: [WinError 5] Access is denied: '...\\.git\\...'
-    if func in (os.rmdir, os.remove, os.unlink) and exc[1].errno == errno.EACCES:
+    if func in (os.rmdir, os.remove, os.unlink) and exc.errno == errno.EACCES:
         os.chmod(path, stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)  # noqa: S103
         func(path)
     else:
@@ -29,7 +30,11 @@ def temp_dir():
         directory = os.path.realpath(directory)
         yield directory
     finally:
-        shutil.rmtree(directory, ignore_errors=False, onerror=handle_remove_readonly)
+        if version_info >= (3, 12):
+            onexc = dict(onexc=handle_remove_readonly)
+        else:
+            onexc = dict(onerror=lambda func, path, exc: handle_remove_readonly(func, path, exc[1]))
+        shutil.rmtree(directory, ignore_errors=False, **onexc)
 
 
 @contextmanager
