@@ -30,7 +30,7 @@ def temp_dir():
         directory = os.path.realpath(directory)
         yield directory
     finally:
-        if version_info >= (3, 12):
+        if version_info[:2] >= (3, 12):
             onexc = dict(onexc=handle_remove_readonly)
         else:
             onexc = dict(onerror=lambda func, path, exc: handle_remove_readonly(func, path, exc[1]))
