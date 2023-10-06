@@ -40,6 +40,9 @@ class VCSBuildHook(BuildHookInterface):
     def initialize(self, version, build_data):
         from setuptools_scm import dump_version
 
-        dump_version(self.root, self.metadata.version, self.config_version_file, template=self.config_template)
+        kwargs = {}
+        if self.config_template:
+            kwargs['template'] = self.config_template
+        dump_version(self.root, self.metadata.version, self.config_version_file, **kwargs)
 
         build_data['artifacts'].append(f'/{self.config_version_file}')
