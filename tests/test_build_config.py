@@ -24,14 +24,6 @@ class TestVersionFile:
         with pytest.raises(TypeError, match='Option `version-file` for build hook `vcs` must be a string'):
             _ = build_hook.config_version_file
 
-    def test_missing(self, new_project_basic):
-        config = {}
-        build_dir = os.path.join(new_project_basic, 'dist')
-        build_hook = VCSBuildHook(new_project_basic, config, None, None, build_dir, 'wheel')
-
-        with pytest.raises(ValueError, match='Option `version-file` for build hook `vcs` is required'):
-            _ = build_hook.config_version_file
-
 
 class TestTemplate:
     def test_correct(self, new_project_basic):

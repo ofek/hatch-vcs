@@ -38,9 +38,7 @@ class VCSBuildHook(BuildHookInterface):
     @cached_property
     def config_version_file(self):
         version_file = self.config.get('version-file')
-        if not version_file:
-            raise ValueError(f'Option `version-file` for build hook `{self.PLUGIN_NAME}` is required')
-        elif not isinstance(version_file, str):
+        if version_file is not None and not isinstance(version_file, str):
             raise TypeError(f'Option `version-file` for build hook `{self.PLUGIN_NAME}` must be a string')
 
         return version_file
@@ -61,8 +59,6 @@ class VCSBuildHook(BuildHookInterface):
         return detect_files
 
     def initialize(self, version, build_data):
-        from setuptools_scm import dump_version
-
         if self.config_detect_files:
             file_finders = entry_points().select(group='setuptools.file_finders', name='setuptools_scm')
             file_finder = next(iter(file_finders)).load()
@@ -83,9 +79,12 @@ class VCSBuildHook(BuildHookInterface):
                 # Exclude everything else, unless overridden as an artifact or force-include
                 self.build_config.exclude_spec.patterns[:] = [pathspec.GitIgnorePattern('*')]
 
-        kwargs = {}
-        if self.config_template:
-            kwargs['template'] = self.config_template
-        dump_version(self.root, self.metadata.version, self.config_version_file, **kwargs)
+        if self.config_version_file:
+            from setuptools_scm import dump_version
 
-        build_data['artifacts'].append(f'/{self.config_version_file}')
+            kwargs = {}
+            if self.config_template:
+                kwargs['template'] = self.config_template
+            dump_version(self.root, self.metadata.version, self.config_version_file, **kwargs)
+
+            build_data['artifacts'].append(f'/{self.config_version_file}')
