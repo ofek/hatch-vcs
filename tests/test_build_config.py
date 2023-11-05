@@ -42,6 +42,23 @@ class TestTemplate:
             _ = build_hook.config_template
 
 
+class TestDetectFiles:
+    def test_correct(self, new_project_basic):
+        config = {'detect-files': True}
+        build_dir = os.path.join(new_project_basic, 'dist')
+        build_hook = VCSBuildHook(new_project_basic, config, None, None, build_dir, 'wheel')
+
+        assert build_hook.config_detect_files is True
+
+    def test_not_bool(self, new_project_basic):
+        config = {'detect-files': 'yes'}
+        build_dir = os.path.join(new_project_basic, 'dist')
+        build_hook = VCSBuildHook(new_project_basic, config, None, None, build_dir, 'wheel')
+
+        with pytest.raises(TypeError, match='Option `detect-files` for build hook `vcs` must be a boolean'):
+            _ = build_hook.config_detect_files
+
+
 def test_coverage(new_project_basic):
     config = {'version-file': 'foo/_version.py'}
     build_dir = os.path.join(new_project_basic, 'dist')
