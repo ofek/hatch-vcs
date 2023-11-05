@@ -25,6 +25,10 @@ class SuppressMessage(logging.Handler):
             return False
         return True
 
+    def emit(self, record: logging.LogRecord) -> None:
+        """This handler does nothing, but emit() may get called in rare cases."""
+        pass
+
     @contextmanager
     def inject(self, logger: logging.Logger):
         logger.addHandler(self)
