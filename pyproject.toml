@@ -83,10 +83,8 @@ ignore = [
   "FBT003",
   # Ignore checks for possible passwords
   "S105", "S106", "S107",
-]
-unfixable = [
-  # Don't touch unused imports
-  "F401",
+  # Boolean default values
+  "FBT002",
 ]
 
 [tool.ruff.isort]

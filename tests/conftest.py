@@ -3,7 +3,6 @@
 # SPDX-License-Identifier: MIT
 import errno
 import os
-import shutil
 import stat
 import tempfile
 from contextlib import contextmanager
