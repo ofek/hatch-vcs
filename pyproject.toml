@@ -35,6 +35,7 @@ classifiers = [
 dependencies = [
   "hatchling>=1.1.0",
   "setuptools-scm>=6.4.0",
+  "importlib_metadata>=5.0; python_version < '3.12'",
 ]
 
 [project.urls]

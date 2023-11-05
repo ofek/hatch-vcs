@@ -7,9 +7,9 @@ from contextlib import contextmanager
 from functools import cached_property
 
 try:
-    from importlib.metadata import entry_points
+    from importlib_metadata import entry_points
 except ImportError:
-    from importlib_metadata import entry_points  # type: ignore
+    from importlib.metadata import entry_points
 
 import pathspec
 from hatchling.builders.hooks.plugin.interface import BuildHookInterface
