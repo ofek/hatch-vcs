@@ -3,6 +3,8 @@
 # SPDX-License-Identifier: MIT
 from hatchling.builders.hooks.plugin.interface import BuildHookInterface
 
+sentinel = object()
+
 
 class VCSBuildHook(BuildHookInterface):
     PLUGIN_NAME = 'vcs'
@@ -11,7 +13,7 @@ class VCSBuildHook(BuildHookInterface):
         super().__init__(*args, **kwargs)
 
         self.__config_version_file = None
-        self.__config_template = None
+        self.__config_template = sentinel
 
     @property
     def config_version_file(self):
@@ -28,9 +30,9 @@ class VCSBuildHook(BuildHookInterface):
 
     @property
     def config_template(self):
-        if self.__config_template is None:
-            template = self.config.get('template', '')
-            if not isinstance(template, str):
+        if self.__config_template is sentinel:
+            template = self.config.get('template')
+            if template is not None and not isinstance(template, str):
                 raise TypeError(f'Option `template` for build hook `{self.PLUGIN_NAME}` must be a string')
 
             self.__config_template = template
@@ -40,6 +42,9 @@ class VCSBuildHook(BuildHookInterface):
     def initialize(self, version, build_data):
         from setuptools_scm import dump_version
 
-        dump_version(self.root, self.metadata.version, self.config_version_file, template=self.config_template)
+        kwargs = {}
+        if self.config_template:
+            kwargs['template'] = self.config_template
+        dump_version(self.root, self.metadata.version, self.config_version_file, **kwargs)
 
         build_data['artifacts'].append(f'/{self.config_version_file}')
