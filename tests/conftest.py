@@ -3,10 +3,10 @@
 # SPDX-License-Identifier: MIT
 import errno
 import os
-import shutil
 import stat
 import tempfile
 from contextlib import contextmanager
+from functools import wraps
 from sys import version_info
 
 if version_info[:2] >= (3, 12):
@@ -14,15 +14,18 @@ if version_info[:2] >= (3, 12):
 else:
     from shutil import rmtree as _rmtree
 
-    # Wrap rmtree to backport the onexc keyword argument from Python 3.12
+    # Backport the onexc keyword argument from Python 3.12
+    @wraps(_rmtree)
     def rmtree(path, ignore_errors=False, onerror=None, *args, **kwds):
-        if "onexc" in kwds:
+        if 'onexc' in kwds:
             kwds = dict(kwds)
-            onexc = kwds.pop("onexc")
+            onexc = kwds.pop('onexc')
 
             def onerror(func, path, exc):
                 return onexc(func, path, exc[1])
+
         return _rmtree(path, ignore_errors, onerror, *args, **kwds)
+
 
 import pytest
 
