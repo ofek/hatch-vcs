@@ -205,3 +205,23 @@ foo = "https://github.com/bar/baz#{commit_hash}"
 """,
     ) as project:
         yield project
+
+
+@pytest.fixture
+def new_project_detect_files(temp_dir):
+    with create_project(
+        temp_dir,
+        """\
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "my-app"
+version = "1.2.3"
+
+[tool.hatch.build.hooks.vcs]
+detect-files = true
+""",
+    ) as project:
+        yield project
