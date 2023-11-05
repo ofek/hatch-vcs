@@ -16,13 +16,15 @@ else:
 
     # Wrap rmtree to backport the onexc keyword argument from Python 3.12
     def rmtree(path, ignore_errors=False, onerror=None, *args, **kwds):
-        if "onexc" in kwds:
+        if 'onexc' in kwds:
             kwds = dict(kwds)
-            onexc = kwds.pop("onexc")
+            onexc = kwds.pop('onexc')
 
             def onerror(func, path, exc):
                 return onexc(func, path, exc[1])
+
         return _rmtree(path, ignore_errors, onerror, *args, **kwds)
+
 
 import pytest
 
