@@ -52,10 +52,18 @@ class VCSBuildHook(BuildHookInterface):
             raise TypeError(f'Option `template` for build hook `{self.PLUGIN_NAME}` must be a string')
         return template
 
+    @cached_property
+    def config_detect_files(self):
+        detect_files = self.config.get('detect-files', False)
+        if not isinstance(detect_files, bool):
+            raise TypeError(f'Option `detect-files` for build hook `{self.PLUGIN_NAME}` must be a boolean')
+
+        return detect_files
+
     def initialize(self, version, build_data):
         from setuptools_scm import dump_version
 
-        if self.config.get('detect-files'):
+        if self.config_detect_files:
             file_finders = entry_points().select(group='setuptools.file_finders', name='setuptools_scm')
             file_finder = next(iter(file_finders)).load()
 
