@@ -8,6 +8,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
+## 0.4.0 - 2023-11-06
+
+***Changed:***
+
+- Drop support for Python 3.7
+
+***Added:***
+
+- Officially support Python 3.12
+
+***Fixed:***
+
+- Prevent `UserWarning` when a template is not defined explicitly
+
 ## 0.3.0 - 2022-12-10
 
 ***Changed:***
