@@ -7,7 +7,7 @@ import zipfile
 
 import pytest
 
-from .utils import build_project, git, read_file
+from .utils import build_project, git, read_file, write_file
 
 
 def test_basic(new_project_basic):
@@ -179,3 +179,39 @@ def test_metadata(new_project_metadata):
         contents = f.read()
 
         assert f'Project-URL: foo, https://github.com/bar/baz#{git("rev-parse", "HEAD")}' in contents
+
+
+def test_detect_files(new_project_detect_files):
+    # Create a file that should be ignored, but use a non-root .gitignore
+    open(os.path.join(new_project_detect_files, 'my_app', 'ignore-this-file'), 'w').close()
+    write_file(os.path.join(new_project_detect_files, 'my_app', '.gitignore'), 'ignore-this-file')
+
+    build_project('-t', 'wheel')
+
+    build_dir = os.path.join(new_project_detect_files, 'dist')
+    assert os.path.isdir(build_dir)
+
+    artifacts = os.listdir(build_dir)
+    assert len(artifacts) == 1
+    wheel_file = artifacts[0]
+
+    assert wheel_file == 'my_app-1.2.3-py2.py3-none-any.whl'
+
+    extraction_directory = os.path.join(os.path.dirname(new_project_detect_files), '_archive')
+    os.mkdir(extraction_directory)
+
+    with zipfile.ZipFile(os.path.join(build_dir, wheel_file), 'r') as zip_archive:
+        zip_archive.extractall(extraction_directory)
+
+    metadata_directory = os.path.join(extraction_directory, 'my_app-1.2.3.dist-info')
+    assert os.path.isdir(metadata_directory)
+
+    package_directory = os.path.join(extraction_directory, 'my_app')
+    assert os.path.isdir(package_directory)
+    assert len(os.listdir(package_directory)) == 4
+
+    assert os.path.isfile(os.path.join(package_directory, '__init__.py'))
+    assert os.path.isfile(os.path.join(package_directory, 'foo.py'))
+    assert os.path.isfile(os.path.join(package_directory, 'bar.py'))
+    assert os.path.isfile(os.path.join(package_directory, 'baz.py'))
+    assert not os.path.isfile(os.path.join(package_directory, 'ignore-this-file'))
