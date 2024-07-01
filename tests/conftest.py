@@ -86,7 +86,7 @@ def create_project(directory, metadata, *, setup_vcs=True, nested=False):
             git('config', '--local', 'user.email', 'foo@bar.baz')
             git('add', '.')
             git('commit', '-m', 'test')
-            git('tag', '1.2.3')
+            git('tag', '1.2.3', '-m', 'test')
 
             if nested:
                 os.chdir(project_dir)

@@ -1,6 +1,8 @@
 # SPDX-FileCopyrightText: 2022-present Ofek Lev <oss@ofek.dev>
 #
 # SPDX-License-Identifier: MIT
+import warnings
+
 import pytest
 
 from hatch_vcs.version_source import VCSVersionSource
@@ -19,6 +21,17 @@ class TestTagPattern:
 
         with pytest.raises(TypeError, match='option `tag-pattern` must be a string'):
             _ = version_source.config_tag_pattern
+
+    def test_no_tag_pattern(self, new_project_basic):
+        config = {}
+        version_source = VCSVersionSource(new_project_basic, config)
+
+        assert version_source.config_tag_pattern == ''
+
+        # Should not raise any deprecation warnings
+        with warnings.catch_warnings(category=DeprecationWarning):
+            warnings.simplefilter('error')
+            _ = version_source.get_version_data()
 
 
 class TestFallbackVersion:
