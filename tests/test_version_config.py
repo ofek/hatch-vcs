@@ -29,7 +29,7 @@ class TestTagPattern:
         assert version_source.config_tag_pattern == ''
 
         # Should not raise any deprecation warnings
-        with warnings.catch_warnings(category=DeprecationWarning):
+        with warnings.catch_warnings():
             warnings.simplefilter('error')
             _ = version_source.get_version_data()
 
