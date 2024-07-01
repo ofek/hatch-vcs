@@ -28,7 +28,7 @@ dependencies = [
 [envs.lint.scripts]
 typing = "mypy --install-types --non-interactive {args:hatch_vcs tests}"
 style = [
-  "ruff {args:.}",
+  "ruff check {args:.}",
   "black --check --diff {args:.}",
 ]
 fmt = [
