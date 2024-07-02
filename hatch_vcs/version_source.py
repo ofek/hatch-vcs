@@ -55,7 +55,7 @@ class VCSVersionSource(VersionSourceInterface):
 
         # Only set for non-empty strings
         if self.config_tag_pattern:
-            config.setdefault('tag_regex', self.config_tag_pattern)
+            config['tag_regex'] = self.config_tag_pattern
 
         # Only set for non-empty strings
         if self.config_fallback_version:

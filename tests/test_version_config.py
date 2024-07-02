@@ -33,6 +33,12 @@ class TestTagPattern:
             warnings.simplefilter('error')
             _ = version_source.get_version_data()
 
+    def test_custom_tag_pattern_get_version(self, new_project_basic):
+        config = {'tag-pattern': '(?P<version>.+)'}
+        version_source = VCSVersionSource(new_project_basic, config)
+
+        assert version_source.get_version_data() == {'version': '1.2.3'}
+
 
 class TestFallbackVersion:
     def test_correct(self, new_project_basic):
