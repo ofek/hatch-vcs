@@ -53,7 +53,9 @@ class VCSVersionSource(VersionSourceInterface):
         config = deepcopy(self.config_raw_options)
         config.setdefault('root', self.root)
 
-        config.setdefault('tag_regex', self.config_tag_pattern)
+        # Only set for non-empty strings
+        if self.config_tag_pattern:
+            config['tag_regex'] = self.config_tag_pattern
 
         # Only set for non-empty strings
         if self.config_fallback_version:

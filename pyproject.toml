@@ -57,6 +57,8 @@ skip-string-normalization = true
 [tool.ruff]
 target-version = "py38"
 line-length = 120
+
+[tool.ruff.lint]
 select = [
   "A",
   "B",
@@ -89,16 +91,16 @@ ignore = [
   "FBT002",
 ]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 known-first-party = ["hatch_vcs"]
 
-[tool.ruff.flake8-quotes]
+[tool.ruff.lint.flake8-quotes]
 inline-quotes = "single"
 
-[tool.ruff.flake8-tidy-imports]
+[tool.ruff.lint.flake8-tidy-imports]
 ban-relative-imports = "all"
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 # Tests can use relative imports and assertions
 "tests/**/*" = ["TID252", "S101"]
 
