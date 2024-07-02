@@ -86,6 +86,7 @@ def create_project(directory, metadata, *, setup_vcs=True, nested=False):
             git('config', '--local', 'user.email', 'foo@bar.baz')
             git('add', '.')
             git('commit', '-m', 'test')
+            # TODO: Confirm that creating a tag without a message locally causes tests to hang
             git('tag', '1.2.3', '-m', 'test')
 
             if nested:
