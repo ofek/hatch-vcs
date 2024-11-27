@@ -73,7 +73,6 @@ root = "." # Location of .git folder, e.g. ".." if one folder above
 
 - `SETUPTOOLS_SCM_PRETEND_VERSION`: When defined and not empty, it's used as the primary source for the version, in which case it will be an unparsed string.
 
-
 ## Build hook
 
 The [build hook plugin](https://hatch.pypa.io/latest/plugins/build-hook/reference/) name is `vcs`.
