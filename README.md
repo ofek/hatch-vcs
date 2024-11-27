@@ -59,11 +59,20 @@ The [version source plugin](https://hatch.pypa.io/latest/plugins/version-source/
 | --- | --- | --- | --- |
 | `tag-pattern` | `str` | see [code](https://github.com/pypa/setuptools_scm/blob/v6.4.0/src/setuptools_scm/config.py#L13) | A regular expression used to extract the version part from VCS tags. The pattern needs to contain either a single match group, or a group named `version`, that captures the actual version information. |
 | `fallback-version` | `str` | | The version that will be used if no other method for detecting the version is successful. If not specified, unsuccessful version detection will raise an error. |
-| `raw-options` | `dict` | | A table of [`setuptools-scm` parameters](https://github.com/pypa/setuptools_scm#configuration-parameters) that will override any of the options listed above. The `write_to` and `write_to_template` parameters are ignored. |
+| `raw-options` | `dict` | | A table of `setuptools-scm` parameters. Refer to [raw-options](#raw-options)  |
+
+#### raw-options
+
+Setting the [`setuptools-scm` parameters](https://setuptools-scm.readthedocs.io/en/latest/config/#configuration-parameters). The `write_to` and `write_to_template` parameters are ignored. 
+```toml
+[tool.hatch.version.raw-options]
+root = "." # Location of .git folder, e.g. ".." if one folder above
+```
 
 ### Version source environment variables
 
 - `SETUPTOOLS_SCM_PRETEND_VERSION`: When defined and not empty, it's used as the primary source for the version, in which case it will be an unparsed string.
+
 
 ## Build hook
 
