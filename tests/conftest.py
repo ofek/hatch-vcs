@@ -3,10 +3,29 @@
 # SPDX-License-Identifier: MIT
 import errno
 import os
-import shutil
 import stat
 import tempfile
 from contextlib import contextmanager
+from functools import wraps
+from sys import version_info
+
+if version_info[:2] >= (3, 12):
+    from shutil import rmtree
+else:
+    from shutil import rmtree as _rmtree
+
+    # Backport the onexc keyword argument from Python 3.12
+    @wraps(_rmtree)
+    def rmtree(path, ignore_errors=False, onerror=None, *args, **kwds):
+        if 'onexc' in kwds:
+            kwds = dict(kwds)
+            onexc = kwds.pop('onexc')
+
+            def onerror(func, path, exc):
+                return onexc(func, path, exc[1])
+
+        return _rmtree(path, ignore_errors, onerror, *args, **kwds)
+
 
 import pytest
 
@@ -15,7 +34,7 @@ from .utils import create_file, git, write_file
 
 def handle_remove_readonly(func, path, exc):  # no cov
     # PermissionError: [WinError 5] Access is denied: '...\\.git\\...'
-    if func in (os.rmdir, os.remove, os.unlink) and exc[1].errno == errno.EACCES:
+    if func in (os.rmdir, os.remove, os.unlink) and exc.errno == errno.EACCES:
         os.chmod(path, stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)  # noqa: S103
         func(path)
     else:
@@ -29,7 +48,7 @@ def temp_dir():
         directory = os.path.realpath(directory)
         yield directory
     finally:
-        shutil.rmtree(directory, ignore_errors=False, onerror=handle_remove_readonly)
+        rmtree(directory, ignore_errors=False, onexc=handle_remove_readonly)
 
 
 @contextmanager
@@ -67,7 +86,8 @@ def create_project(directory, metadata, *, setup_vcs=True, nested=False):
             git('config', '--local', 'user.email', 'foo@bar.baz')
             git('add', '.')
             git('commit', '-m', 'test')
-            git('tag', '1.2.3')
+            # TODO: Confirm that creating a tag without a message locally causes tests to hang
+            git('tag', '1.2.3', '-m', 'test')
 
             if nested:
                 os.chdir(project_dir)

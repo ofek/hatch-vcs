@@ -8,7 +8,7 @@ dynamic = ["version"]
 description = 'Hatch plugin for versioning with your preferred VCS'
 readme = "README.md"
 license = { text = "MIT" }
-requires-python = ">= 3.7"
+requires-python = ">= 3.8"
 keywords = [
   "git",
   "hatch",
@@ -24,11 +24,11 @@ authors = [
 classifiers = [
   "Development Status :: 4 - Beta",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.7",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
@@ -50,13 +50,15 @@ vcs = "hatch_vcs.hooks"
 path = "hatch_vcs/__about__.py"
 
 [tool.black]
-target-version = ["py37"]
+target-version = ["py38"]
 line-length = 120
 skip-string-normalization = true
 
 [tool.ruff]
-target-version = "py37"
+target-version = "py38"
 line-length = 120
+
+[tool.ruff.lint]
 select = [
   "A",
   "B",
@@ -83,22 +85,22 @@ ignore = [
   "FBT003",
   # Ignore checks for possible passwords
   "S105", "S106", "S107",
-]
-unfixable = [
-  # Don't touch unused imports
-  "F401",
+  # Ignore noisy checks for insecure subprocess calls
+  "S603", "S607",
+  # Boolean default values
+  "FBT002",
 ]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 known-first-party = ["hatch_vcs"]
 
-[tool.ruff.flake8-quotes]
+[tool.ruff.lint.flake8-quotes]
 inline-quotes = "single"
 
-[tool.ruff.flake8-tidy-imports]
+[tool.ruff.lint.flake8-tidy-imports]
 ban-relative-imports = "all"
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 # Tests can use relative imports and assertions
 "tests/**/*" = ["TID252", "S101"]
 
