@@ -59,7 +59,23 @@ The [version source plugin](https://hatch.pypa.io/latest/plugins/version-source/
 | --- | --- | --- | --- |
 | `tag-pattern` | `str` | see [code](https://github.com/pypa/setuptools_scm/blob/v6.4.0/src/setuptools_scm/config.py#L13) | A regular expression used to extract the version part from VCS tags. The pattern needs to contain either a single match group, or a group named `version`, that captures the actual version information. |
 | `fallback-version` | `str` | | The version that will be used if no other method for detecting the version is successful. If not specified, unsuccessful version detection will raise an error. |
-| `raw-options` | `dict` | | A table of [`setuptools-scm` parameters](https://github.com/pypa/setuptools_scm#configuration-parameters) that will override any of the options listed above. The `write_to` and `write_to_template` parameters are ignored. |
+| `raw-options` | `dict` | | A table of [`setuptools-scm` parameters](https://setuptools-scm.readthedocs.io/en/latest/config/) that will override any of the options listed above. The `write_to` and `write_to_template` parameters are ignored. |
+
+For example, to prevent incrementing version numbers on non-release commits, you can adjust the `version_scheme` parameter for `setuptools-scm` as follows:
+
+- ***pyproject.toml***
+
+    ```toml
+    [tool.hatch.version.raw-options]
+    version_scheme = "no-guess-dev"
+    ```
+
+- ***hatch.toml***
+
+    ```toml
+    [version.raw-options]
+    version_scheme = "no-guess-dev"
+    ```
 
 ### Version source environment variables
 
