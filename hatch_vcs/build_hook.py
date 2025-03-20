@@ -2,6 +2,7 @@
 #
 # SPDX-License-Identifier: MIT
 from functools import cached_property
+import os
 
 from hatchling.builders.hooks.plugin.interface import BuildHookInterface
 
@@ -32,6 +33,7 @@ class VCSBuildHook(BuildHookInterface):
         kwargs = {}
         if self.config_template:
             kwargs['template'] = self.config_template
+        os.makedirs(os.path.dirname(self.config_version_file), exist_ok=True)
         dump_version(self.root, self.metadata.version, self.config_version_file, **kwargs)
 
         build_data['artifacts'].append(f'/{self.config_version_file}')
