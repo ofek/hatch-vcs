@@ -8,6 +8,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
+***Changed:***
+
+- Drop support for Python 3.8
+
+***Added:***
+
+- Officially support Python 3.13
+- Avoid a deprecation warning emitted by a dependency when using the `tag-pattern` option
+
 ## 0.4.0 - 2023-11-06
 
 ***Changed:***
