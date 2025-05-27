@@ -8,7 +8,7 @@ dynamic = ["version"]
 description = 'Hatch plugin for versioning with your preferred VCS'
 readme = "README.md"
 license = "MIT"
-requires-python = ">= 3.9"
+requires-python = ">=3.9"
 keywords = [
   "git",
   "hatch",
@@ -50,12 +50,12 @@ vcs = "hatch_vcs.hooks"
 path = "hatch_vcs/__about__.py"
 
 [tool.black]
-target-version = ["py38"]
+target-version = ["py39"]
 line-length = 120
 skip-string-normalization = true
 
 [tool.ruff]
-target-version = "py38"
+target-version = "py39"
 line-length = 120
 
 [tool.ruff.lint]
