@@ -57,7 +57,7 @@ def create_project(directory, metadata, *, setup_vcs=True, nested=False):
     os.mkdir(root_dir)
 
     gitignore_file = os.path.join(root_dir, '.gitignore')
-    write_file(gitignore_file, '/my_app/version.py')
+    write_file(gitignore_file, '/my_app/_version.py')
 
     if nested:
         project_dir = os.path.join(root_dir, 'project')
