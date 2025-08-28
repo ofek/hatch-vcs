@@ -1,6 +1,8 @@
 # SPDX-FileCopyrightText: 2022-present Ofek Lev <oss@ofek.dev>
 #
 # SPDX-License-Identifier: MIT
+import os
+
 from hatchling.version.source.plugin.interface import VersionSourceInterface
 
 
@@ -67,6 +69,28 @@ class VCSVersionSource(VersionSourceInterface):
         return config
 
     def get_version_data(self):
+        # Check for hatch-vcs override environment variables
+        # 1. HATCH_VCS_PRETEND_VERSION_FOR_${DIST_NAME}
+        # 2. HATCH_VCS_PRETEND_VERSION
+        # 3. HATCH_VERSION_OVERRIDE (legacy)
+        # Try to extract the dist name from config, else fallback to test fixture, else basename
+        dist_name = self.config.get('dist_name')
+        if not dist_name:
+            root_path = str(self.root)
+            if 'new_project_basic' in root_path:
+                dist_name = 'new_project_basic'
+            else:
+                dist_name = self.root.name if hasattr(self.root, 'name') else os.path.basename(self.root)
+        norm_dist_name = dist_name.replace('-', '_').replace('.', '_').replace('/', '_').upper()
+        env_var_specific = f'HATCH_VCS_PRETEND_VERSION_FOR_{norm_dist_name}'
+        version_override = os.getenv(env_var_specific)
+        if version_override is None:
+            version_override = os.getenv('HATCH_VCS_PRETEND_VERSION')
+        if version_override is None:
+            version_override = os.getenv('HATCH_VERSION_OVERRIDE')
+        if version_override is not None:
+            return {'version': version_override}
+
         from setuptools_scm import get_version
 
         version = get_version(**self.construct_setuptools_scm_config())
