@@ -61,6 +61,7 @@ class TestRawOptions:
         version_source = VCSVersionSource(new_project_basic, config)
 
         assert version_source.config_raw_options == {'normalize': False}
+        assert version_source.get_version_data() == {'version': '1.2.03'}
 
     def test_not_table(self, new_project_basic):
         config = {'raw-options': 9000}
