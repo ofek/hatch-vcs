@@ -29,7 +29,7 @@ class VCSBuildHook(BuildHookInterface):
     def initialize(self, version, build_data):
         from setuptools_scm import dump_version
 
-        kwargs = {}
+        kwargs = {'scm_version': None}
         if self.config_template:
             kwargs['template'] = self.config_template
         dump_version(self.root, self.metadata.version, self.config_version_file, **kwargs)
