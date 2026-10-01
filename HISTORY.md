@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
+***Fixed:***
+
+- Rewrite setuptools-scm parent-repository errors so they suggest `[tool.hatch.version.raw-options]` instead of `[tool.setuptools_scm]`
+
 ## 0.5.0 - 2025-05-27
 
 ***Changed:***

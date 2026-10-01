@@ -69,5 +69,17 @@ class VCSVersionSource(VersionSourceInterface):
     def get_version_data(self):
         from setuptools_scm import get_version
 
-        version = get_version(**self.construct_setuptools_scm_config())
+        try:
+            version = get_version(**self.construct_setuptools_scm_config())
+        except LookupError as exc:
+            raise LookupError(_rewrite_setuptools_scm_hint(str(exc))) from exc
         return {'version': version}
+
+
+def _rewrite_setuptools_scm_hint(message):
+    """Point setuptools-scm's parent-repo hints at Hatch config keys."""
+    rewritten = message.replace('[tool.setuptools_scm]', '[tool.hatch.version.raw-options]')
+    return rewritten.replace(
+        '   setuptools_scm.get_version(relative_to=__file__)',
+        '   [tool.hatch.version.raw-options]\n   relative_to = "pyproject.toml"',
+    )
