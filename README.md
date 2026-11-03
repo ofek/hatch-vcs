@@ -57,7 +57,7 @@ The [version source plugin](https://hatch.pypa.io/latest/plugins/version-source/
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
-| `tag-pattern` | `str` | see [code](https://github.com/pypa/setuptools_scm/blob/v6.4.0/src/setuptools_scm/config.py#L13) | A regular expression used to extract the version part from VCS tags. The pattern needs to contain either a single match group, or a group named `version`, that captures the actual version information. |
+| `tag-pattern` | `str` | see [`DEFAULT_TAG_REGEX`](https://setuptools-scm.readthedocs.io/en/latest/config/#vcs_versioning._config.DEFAULT_TAG_REGEX) | A regular expression used to extract the version part from VCS tags. The pattern needs to contain either a single match group, or a group named `version`, that captures the actual version information. |
 | `fallback-version` | `str` | | The version that will be used if no other method for detecting the version is successful. If not specified, unsuccessful version detection will raise an error. |
 | `raw-options` | `dict` | | A table of [`setuptools-scm` parameters](https://setuptools-scm.readthedocs.io/en/latest/config/) that will override any of the options listed above. The `write_to` and `write_to_template` parameters are ignored. |
 
